@@ -110,7 +110,7 @@ def main():
                     elif node!=start and node !=goal:
                         node.make_wall()    
 
-            elif pygame.mouse.get_pressed()[2]            :
+            elif pygame.mouse.get_pressed()[2]:
                 pos=pygame.mouse.get_pos()
                 row,col=get_clicked_pos(pos)
                 
