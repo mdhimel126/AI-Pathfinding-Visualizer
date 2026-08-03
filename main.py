@@ -1,5 +1,7 @@
 import pygame
 
+from algorithms import bfs
+
 width,height=600,600
 rows,cols=25,25
 cell_size=width // cols
@@ -9,8 +11,6 @@ black=(30,30,30)
 green=(0,200,0)
 red=(200,0,0)
 grey=(200,200,200)
-blue=(0,120,255)
-yellow=(255,215,0)
 
 class Node:
     def __init__(self,row,col):
@@ -127,7 +127,11 @@ def main():
                 if event.key ==pygame.K_c:
                     start=None
                     goal=None
-                    grid=make_grid()                
+                    grid=make_grid()  
+
+                if event.key==pygame.K_SPACE and start and goal:
+                    bfs(lambda:draw(win,grid),grid,start,goal,rows,cols)                  
+
 
 
     pygame.quit()
