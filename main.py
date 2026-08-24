@@ -1,6 +1,7 @@
 import pygame
 
-from bfs_algorithms import bfs
+from bfs_algorithm import bfs
+from dfs_algorithm import dfs
 
 width,height=600,600
 rows,cols=25,25
@@ -132,7 +133,10 @@ def main():
                     grid=make_grid()  
 
                 if event.key==pygame.K_b and start and goal:
-                    bfs(lambda:draw(win,grid),grid,start,goal,rows,cols)                  
+                    bfs(lambda:draw(win,grid),grid,start,goal,rows,cols)
+
+                if event.key==pygame.K_d and start and goal:
+                    dfs(lambda:draw(win,grid,),grid,start,goal,rows,cols)                      
 
 
 

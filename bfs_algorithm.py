@@ -29,7 +29,7 @@ def reconstructPath(cameFrom,current,drawFunc):
         if not current.is_start:
             current.color=ORANGE
         drawFunc()    
-        pygame.time.delay(80)
+        pygame.time.delay(60)
 
 def  bfs(drawFunc, grid,start,goal,rows,cols):
 
@@ -59,8 +59,9 @@ def  bfs(drawFunc, grid,start,goal,rows,cols):
 
                 if not neighbor.is_goal:
                     neighbor.color=PURPLE
+                drawFunc()            
+                pygame.time.delay(20)    
 
-        drawFunc()            
-        pygame.time.delay(20)
+        
 
     return False
