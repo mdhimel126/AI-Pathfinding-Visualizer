@@ -1,6 +1,6 @@
 import pygame
 
-from algorithms import bfs
+from bfs_algorithms import bfs
 
 width,height=600,600
 rows,cols=25,25
@@ -82,6 +82,8 @@ def main():
     win=pygame.display.set_mode((width,height))
     pygame.display.set_caption("AI Pathfinding visualizer")
 
+    clock=pygame.time.Clock()
+
     grid=make_grid()
 
     start=None
@@ -129,7 +131,7 @@ def main():
                     goal=None
                     grid=make_grid()  
 
-                if event.key==pygame.K_SPACE and start and goal:
+                if event.key==pygame.K_b and start and goal:
                     bfs(lambda:draw(win,grid),grid,start,goal,rows,cols)                  
 
 
