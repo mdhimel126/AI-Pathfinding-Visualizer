@@ -4,15 +4,20 @@ from bfs_algorithm import bfs
 from dfs_algorithm import dfs
 from a_start_algorithm import aStar
 
-width,height=600,600
+FONT =None
+
+width,height=750,600
 rows,cols=25,25
-cell_size=width // cols
+cell_size=height // rows
+
+grid_width=cols* cell_size
 
 white=(255,255,255)
 black=(30,30,30)
 green=(0,200,0)
 red=(200,0,0)
 grey=(200,200,200)
+panel_bg=(235,235,235)
 
 class Node:
     def __init__(self,row,col):
@@ -58,9 +63,34 @@ def make_grid():
 
 def draw_grid_lines(win):
     for r in range(rows+1):
-        pygame.draw.line(win,grey,(0,r*cell_size),(width,r*cell_size))
+        pygame.draw.line(win,grey,(0,r*cell_size),(grid_width,r*cell_size))
     for c in range(cols+1):    
         pygame.draw.line(win,grey,(c*cell_size,0),(c*cell_size,height))
+
+def draw_legend(win):
+
+    panel_rect=pygame.Rect(grid_width,0,width - grid_width,height)
+    pygame.draw.rect(win,panel_bg,panel_rect)
+    
+    instructions=[
+        "Controls:",
+        "",
+        "Left Click - Start/Goal/Wall",
+        "Right Click - Reset a cell",
+        "",
+        "b - Run BFS",
+        "d -Run DFS",
+        "a - Run A*",
+        "c - Clear grid",
+    ]        
+
+    x_offset=grid_width+10
+    y_offset=30
+
+    for line in instructions:
+        text_surface=FONT.render(line,True,(0,0,0))
+        win.blit(text_surface, (x_offset,y_offset))
+        y_offset +=30
 
 
 def draw(win,grid):
@@ -68,7 +98,8 @@ def draw(win,grid):
     for row in grid:
         for node in row:
             node.draw(win)
-    draw_grid_lines(win)                
+    draw_grid_lines(win)     
+    draw_legend(win)           
     pygame.display.update()
 
 def get_clicked_pos(pos):
@@ -80,7 +111,10 @@ def get_clicked_pos(pos):
 
 
 def main():
+    global FONT
     pygame.init()
+    pygame.font.init()
+    FONT=pygame.font.SysFont("arial",14)
     win=pygame.display.set_mode((width,height))
     pygame.display.set_caption("AI Pathfinding visualizer")
 
