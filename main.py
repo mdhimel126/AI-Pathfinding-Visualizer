@@ -2,6 +2,7 @@ import pygame
 
 from bfs_algorithm import bfs
 from dfs_algorithm import dfs
+from a_start_algorithm import aStar
 
 width,height=600,600
 rows,cols=25,25
@@ -137,6 +138,11 @@ def main():
 
                 if event.key==pygame.K_d and start and goal:
                     dfs(lambda:draw(win,grid,),grid,start,goal,rows,cols)                      
+
+                if event.key ==pygame.K_a and start and goal:
+                    aStar(lambda:draw(win,grid),grid,start,goal,rows,cols)
+                    
+
 
 
 
