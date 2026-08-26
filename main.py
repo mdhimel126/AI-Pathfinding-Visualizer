@@ -3,6 +3,7 @@ import pygame
 from bfs_algorithm import bfs
 from dfs_algorithm import dfs
 from a_start_algorithm import aStar
+from greedy_algorithm import greedy
 
 FONT =None
 
@@ -81,7 +82,9 @@ def draw_legend(win):
         "b - Run BFS",
         "d -Run DFS",
         "a - Run A*",
-        "c - Clear grid",
+        "g -  Greedy",
+        "c - Clear grid"
+       
     ]        
 
     x_offset=grid_width+10
@@ -117,8 +120,6 @@ def main():
     FONT=pygame.font.SysFont("arial",14)
     win=pygame.display.set_mode((width,height))
     pygame.display.set_caption("AI Pathfinding visualizer")
-
-    clock=pygame.time.Clock()
 
     grid=make_grid()
 
@@ -175,6 +176,9 @@ def main():
 
                 if event.key ==pygame.K_a and start and goal:
                     aStar(lambda:draw(win,grid),grid,start,goal,rows,cols)
+
+                if event.key ==pygame.K_g and start and goal:
+                    greedy(lambda:draw(win,grid),grid,start,goal,rows,cols)    
                     
 
 
