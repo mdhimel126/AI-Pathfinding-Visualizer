@@ -7,6 +7,9 @@ from greedy_algorithm import greedy
 
 FONT =None
 
+algorithm_name=""
+explore_nodes=0
+
 width,height=750,600
 rows,cols=25,25
 cell_size=height // rows
@@ -83,7 +86,11 @@ def draw_legend(win):
         "d -Run DFS",
         "a - Run A*",
         "g -  Greedy",
-        "c - Clear grid"
+        "c - Clear grid",
+        "",
+        "",
+        f"Algorithm: {algorithm_name}",
+        f"Explore Nodex: {explore_nodes}"
        
     ]        
 
@@ -114,7 +121,8 @@ def get_clicked_pos(pos):
 
 
 def main():
-    global FONT
+    global FONT,algorithm_name,explore_nodes
+
     pygame.init()
     pygame.font.init()
     FONT=pygame.font.SysFont("arial",14)
@@ -166,19 +174,34 @@ def main():
                 if event.key ==pygame.K_c:
                     start=None
                     goal=None
-                    grid=make_grid()  
+                    grid=make_grid()
+
+                    algorithm_name=""  
+                    explore_nodes=0
 
                 if event.key==pygame.K_b and start and goal:
-                    bfs(lambda:draw(win,grid),grid,start,goal,rows,cols)
+                    algorithm_name="BFS"
+                    explore_nodes=0
+                    success,explore_nodes=bfs(lambda:draw(win,grid),grid,start,goal,rows,cols)
+                    draw(win,grid)
 
                 if event.key==pygame.K_d and start and goal:
-                    dfs(lambda:draw(win,grid,),grid,start,goal,rows,cols)                      
+                     algorithm_name="DFS"
+                     explore_nodes=0
+                     success,explore_nodes=dfs(lambda:draw(win,grid,),grid,start,goal,rows,cols)                      
+                     draw(win,grid)
 
                 if event.key ==pygame.K_a and start and goal:
-                    aStar(lambda:draw(win,grid),grid,start,goal,rows,cols)
+                     algorithm_name="A*"
+                     explore_nodes=0
+                     success,explore_nodes=aStar(lambda:draw(win,grid),grid,start,goal,rows,cols)
+                     draw(win,grid)
 
                 if event.key ==pygame.K_g and start and goal:
-                    greedy(lambda:draw(win,grid),grid,start,goal,rows,cols)    
+                     algorithm_name="Greedy"
+                     explore_nodes=0
+                     success,explore_nodes=greedy(lambda:draw(win,grid),grid,start,goal,rows,cols)    
+                     draw(win,grid)
                     
 
 

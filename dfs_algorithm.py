@@ -45,13 +45,15 @@ def dfs(drawFunc,grid,start,goal,rows,cols):
     cameFrom={}
     visited=set()
 
+    explore_nodes=0
+
     while stack:
 
         for event in pygame.event.get():
 
             if event.type==pygame.QUIT:
                 pygame.quit()
-                return False
+                return False,explore_nodes
 
         current=stack.pop()
 
@@ -60,6 +62,8 @@ def dfs(drawFunc,grid,start,goal,rows,cols):
 
         visited.add(current)
 
+        explore_nodes +=1
+
         if not current.is_start and not current.is_goal:
             current.color=PURPLE
         drawFunc()
@@ -67,7 +71,7 @@ def dfs(drawFunc,grid,start,goal,rows,cols):
 
         if current==goal:
             reconstructPath(cameFrom,current,drawFunc)
-            return True
+            return True,explore_nodes
 
         for neighbor in getNeighbors(grid,current,rows,cols):
             if neighbor not in visited:
@@ -76,4 +80,4 @@ def dfs(drawFunc,grid,start,goal,rows,cols):
 
        
 
-    return False                    
+    return False,explore_nodes                    

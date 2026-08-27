@@ -39,17 +39,21 @@ def  bfs(drawFunc, grid,start,goal,rows,cols):
     cameFrom ={}
     visited={start}
 
+    explore_nodes=0
+
     while queue:
         for event in pygame.event.get():
             if event.type== pygame.QUIT:
                 pygame.quit()
-                return False
+                return False,explore_nodes
 
-        current=queue.popleft()        
+        current=queue.popleft() 
+
+        explore_nodes +=1       
 
         if current ==goal:
             reconstructPath(cameFrom,current,drawFunc)
-            return True
+            return True,explore_nodes
 
         for neighbor in getNeighbors(grid,current,rows,cols):
             if neighbor not in visited:
@@ -64,4 +68,4 @@ def  bfs(drawFunc, grid,start,goal,rows,cols):
 
         
 
-    return False
+    return False,explore_nodes

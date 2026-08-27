@@ -42,6 +42,7 @@ def heuristic(nodeA,nodeB):
 
 def aStar(drawFunc,grid,start,goal,rows,cols):
       count=0
+      explore_nodes=0
 
       openSet=[]
       heapq.heappush(openSet,(0,count,start))
@@ -65,9 +66,11 @@ def aStar(drawFunc,grid,start,goal,rows,cols):
             current=heapq.heappop(openSet)[2]      
             openSetHash.remove(current)
 
+            explore_nodes +=1
+
             if current==goal:
                   reconstructPath(cameFrom,current,drawFunc)
-                  return True
+                  return True,explore_nodes
 
 
             for neighbor in getNeighbors(grid,current,rows,cols):
@@ -92,5 +95,5 @@ def aStar(drawFunc,grid,start,goal,rows,cols):
                               drawFunc()
                               pygame.time.delay(40)
 
-      return False                    
+      return False,explore_nodes                    
 
