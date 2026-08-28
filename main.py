@@ -1,4 +1,5 @@
 import pygame
+import random
 
 from bfs_algorithm import bfs
 from dfs_algorithm import dfs
@@ -44,6 +45,10 @@ class Node:
         self.is_start=False
         self.is_goal=False
 
+    def reset_search(self):
+        if not self.is_start and not self.is_goal and not self.is_wall:
+            self.color=white
+
     def make_wall(self):
         self.color=black
         self.is_wall=True
@@ -63,7 +68,19 @@ def make_grid():
         for c in range(cols):
             row.append(Node(r,c)) 
         grid.append(row)
-    return grid                               
+    return grid
+
+def reset_search(grid):
+    for row in grid:
+        for node in row:
+            node.reset_search() 
+
+def random_obstacles(grid,start,goal,density=0.25):
+    for row in grid:
+        for node in row:
+            if node !=start and node !=goal:
+                if random.random() <density:
+                    node.make_wall()                              
 
 def draw_grid_lines(win):
     for r in range(rows+1):
@@ -78,19 +95,22 @@ def draw_legend(win):
     
     instructions=[
         "Controls:",
-        "",
         "Left Click - Start/Goal/Wall",
         "Right Click - Reset a cell",
         "",
+        "Algorithms:",
         "b - Run BFS",
         "d -Run DFS",
         "a - Run A*",
         "g -  Greedy",
-        "c - Clear grid",
         "",
+        "Grid Controls:",
+        "c - Clear grid",
+        "r - Random Obstacles",
+        "s - Reset search",
         "",
         f"Algorithm: {algorithm_name}",
-        f"Explore Nodex: {explore_nodes}"
+        f"Explore Nodes: {explore_nodes}"
        
     ]        
 
@@ -178,6 +198,12 @@ def main():
 
                     algorithm_name=""  
                     explore_nodes=0
+
+                if event.key ==pygame.K_r:
+                    random_obstacles(grid,start,goal) 
+
+                if event.key ==pygame.K_s:
+                    reset_search(grid)       
 
                 if event.key==pygame.K_b and start and goal:
                     algorithm_name="BFS"
