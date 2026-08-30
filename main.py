@@ -3,7 +3,7 @@ import random
 
 from bfs_algorithm import bfs
 from dfs_algorithm import dfs
-from a_start_algorithm import aStar
+from a_star_algorithm import aStar
 from greedy_algorithm import greedy
 
 FONT =None
